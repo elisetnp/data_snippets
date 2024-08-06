@@ -1,4 +1,4 @@
-# parse git branch, to put in a bashrc file
+# parse git branch, to put in .zshrc file
 parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
 }

@@ -1,6 +1,7 @@
 -- Create a materialized view that tracks the booking process funnel for a service
+-- Example: we have some data in public.event table
 
-CREATE MATERIALIZED VIEW service.matview_funnel_booking_process
+CREATE MATERIALIZED VIEW service.funnel_booking_process
 TABLESPACE pg_default
 AS 
 -- Step 1: Users who first opened the app in the last month
@@ -8,7 +9,7 @@ WITH ae_first_open AS (
     SELECT 
         m.distinct_id,
         date_trunc('month', m."time") AS event_time_month
-    FROM mobile.mixpanel m
+    FROM public.event m
     WHERE m.event = '$ae_first_open' 
         AND m."time" > date_trunc('month', CURRENT_DATE - INTERVAL '1 month')
     GROUP BY m.distinct_id, date_trunc('month', m."time")
@@ -20,7 +21,7 @@ service_first_connection AS (
         m.distinct_id,
         date_trunc('month', m."time") AS event_time_month
     FROM ae_first_open o
-    JOIN mobile.mixpanel m ON m.distinct_id = o.distinct_id
+    JOIN public.event m ON m.distinct_id = o.distinct_id
     WHERE m.event = 'service_first_connection'
 ), 
 
@@ -30,7 +31,7 @@ service_search_started AS (
         m.distinct_id,
         date_trunc('month', m."time") AS event_time_month
     FROM service_first_connection c
-    JOIN mobile.mixpanel m ON m.distinct_id = c.distinct_id
+    JOIN public.event m ON m.distinct_id = c.distinct_id
     WHERE m.event = 'service_search_started'
 ), 
 
@@ -40,7 +41,7 @@ service_reservation_started AS (
         m.distinct_id,
         date_trunc('month', m."time") AS event_time_month
     FROM service_search_started ss
-    JOIN mobile.mixpanel m ON m.distinct_id = ss.distinct_id
+    JOIN public.event m ON m.distinct_id = ss.distinct_id
     WHERE m.event = 'service_reservation_started'
 ), 
 
@@ -50,7 +51,7 @@ service_reservation_completed AS (
         m.distinct_id,
         date_trunc('month', m."time") AS event_time_month
     FROM service_reservation_started rs
-    JOIN mobile.mixpanel m ON m.distinct_id = rs.distinct_id
+    JOIN public.event m ON m.distinct_id = rs.distinct_id
     WHERE m.event = 'service_reservation_completed'
 ), 
 
@@ -60,7 +61,7 @@ service_reservation_cancelled AS (
         m.distinct_id,
         date_trunc('month', m."time") AS event_time_month
     FROM service_reservation_completed rc
-    JOIN mobile.mixpanel m ON m.distinct_id = rc.distinct_id
+    JOIN public.event m ON m.distinct_id = rc.distinct_id
     WHERE m.event = 'service_reservation_cancelled'
 )
 

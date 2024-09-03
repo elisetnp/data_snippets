@@ -7,12 +7,12 @@
 // Find Document by ID
 db.service.find({"_id": ObjectId("63xxxxxxxxxxxxxxxxxxxxbcb7")});
 
-// Find String Contains
+// Find string contains
 db.payments.find({"textHolder": {$regex: "63100xxxxxxxxxxxxxxxxbb3"}})
   .sort({_id: -1})
   .limit(100);
 
-// Find Records with Specified Status and Date Range
+// Find records with specified (or excluded in this case) status and Date Range
 db.service.find({
   "status": {"$nin": ['draft']},
   "created": {

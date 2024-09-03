@@ -8,7 +8,6 @@
 db.service.find({"_id": ObjectId("63xxxxxxxxxxxxxxxxxxxxbcb7")});
 
 // Find String Contains
-
 db.payments.find({"textHolder": {$regex: "63100xxxxxxxxxxxxxxxxbb3"}})
   .sort({_id: -1})
   .limit(100);

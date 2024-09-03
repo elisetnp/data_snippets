@@ -23,14 +23,14 @@ db.service.find({
 .sort({_id: -1})
 .limit(100);
 
-// Find Records with a column exists
+// Find records with a column exists
 db.service.find({
   "rating.service": {"$exists": true}
 })
 .sort({_id: -1})
 .limit(100);
 
-// Find Documents without _id and in a Date Range
+// Find documents without _id and in a Date Range
 db.service.find({
   "_id": { $exists: false },
   "created": {
@@ -41,7 +41,7 @@ db.service.find({
 .sort({_id: -1})
 .limit(100);
 
-// Find Records with specific conditions using $or
+// Count records with specific conditions using $or
 db.service.find({
   "$or": [
     {
@@ -61,7 +61,7 @@ db.service.find({
   ]
 }).count();
 
-// find Minimum value
+// find minimum value
 db.service.find().sort({created: 1}).limit(1);
 
 db.claims.find({"created": {"$exists": true}}).sort({created: 1}).limit(1);
@@ -74,7 +74,7 @@ db.taxes.find({
     $gte: ISODate("2023-05-11T00:00:00.000Z"),
     $lt: ISODate("2023-05-12T00:00:00.000Z")
   },
-  "cars": {"$exists": true}
+  "rate": {"$exists": true}
 });
 
 // Distinct query
@@ -128,6 +128,6 @@ db.purchases.find({
   "_id": { $nin: [
     ObjectId("62e336xxxxxxxxxxxxxx9a01"),
     ObjectId("645caaxxxxxxxxxxxxxxbbf0"),
-    // ... (and so on)
+    // ... and so on
   ] }
 });

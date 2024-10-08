@@ -6,8 +6,11 @@ COMMIT;
 -- Get the current PostgreSQL log file
 SELECT pg_current_logfile();
 
+-- Grant user create role
+ALTER USER username WITH CREATEROLE;
+
 -- Create a new user with a password
-CREATE USER user_name WITH PASSWORD 'example';
+CREATE USER username WITH PASSWORD 'example';
 
 -- Grant SELECT permissions on all tables in a schema to a user
 GRANT SELECT ON ALL TABLES IN SCHEMA schema_name TO user_name;

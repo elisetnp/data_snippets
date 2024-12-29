@@ -13,4 +13,4 @@ Whether you are a beginner seeking examples or an experienced data analyst or da
 
 ## Dedication
 
-✨ to my amazing work buddies who have been a constant source of inspiration and support ✨
+✨ to my amazing buddies who have been a constant source of inspiration and support ✨
